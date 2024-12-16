@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - backend
+
+  spring-app:
+    build: .
+    container_name: spring-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+    networks:
+      - backend
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+
+networks:
+  backend:
+    driver: bridge
