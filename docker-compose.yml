@@ -16,12 +16,14 @@ services:
     container_name: spring-app
     ports:
       - "8080:8080"
+      - "5005:5005"
     depends_on:
       - redis
     networks:
       - backend
     environment:
       SPRING_PROFILES_ACTIVE: docker
+      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
 
 networks:
   backend:
